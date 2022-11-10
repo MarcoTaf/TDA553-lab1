@@ -1,6 +1,5 @@
 import java.awt.*;
-import java.lang.Math.min;
-import java.lang.Math.max;
+import java.lang.Math;
 
 
 public abstract class Car implements Movable{
@@ -23,21 +22,25 @@ public abstract class Car implements Movable{
     }
 
     public void Move(){
-       location.moveAngle(getCurrentSpeed(), rotation);
+       location.MoveAngle(getCurrentSpeed(), rotation);
     }
 
     public void TurnRight()
     {
-        rotation -= 1;
+        rotation --;
         rotation = rotation % 360;
     }
 
     public void TurnLeft()
     {
-        rotation += 1;
+        rotation ++;
         rotation = rotation % 360;
     }
 
+    public void printloc()
+    {
+        location.printloc(modelName, rotation);
+    }
     public double clamp(double _val){
         double _min = 0;
         double _max = 1;

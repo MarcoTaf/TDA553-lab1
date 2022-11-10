@@ -1,5 +1,4 @@
-import static java.lang.Math.sin;
-import static java.lang.Math.cos;
+import java.lang.Math;
 
 public class Vec2{
     double x, y; 
@@ -10,10 +9,16 @@ public class Vec2{
         y = yIn;
     }
 
-    public MoveAngle(double _spd, double _angle)
+    public void MoveAngle(double _spd, double _angle)
     {
+        _angle = Math.toDegrees(_angle);
+
         x += (_spd * Math.cos(_angle));
         y += (_spd * Math.sin(_angle));
+    }
+
+    public void printloc(String name, double rot){
+        System.out.printf(name + ": X: %f/Y: %f/ rotation: %f\n", x, y, rot);
     }
 
 }
