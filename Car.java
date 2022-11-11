@@ -72,7 +72,7 @@ public abstract class Car implements Movable{
     }
 
     public void startEngine(){
-	    currentSpeed = 0.1;
+	    currentSpeed = 0.0;
     }
 
     public void stopEngine(){
@@ -91,12 +91,12 @@ public abstract class Car implements Movable{
         currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
     }
 
-    // TODO fix this method according to lab pm
+
     public void gas(double amount){
         incrementSpeed(clamp(amount));
     }
 
-    // TODO fix this method according to lab pm
+
     public void brake(double amount){
         decrementSpeed(clamp(amount));
     }

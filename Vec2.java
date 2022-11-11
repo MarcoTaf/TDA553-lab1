@@ -9,16 +9,16 @@ public class Vec2{
         y = yIn;
     }
 
-    public void MoveAngle(double _spd, double _angle)
+    public void MoveAngle(double _speed, double _angle)
     {
         _angle = Math.toDegrees(_angle);
 
-        x += (_spd * Math.cos(_angle));
-        y += (_spd * Math.sin(_angle));
+        x += (_speed * Math.cos(_angle));
+        y += (_speed * Math.sin(_angle));
     }
 
-    public void printloc(String name, double rot){
-        System.out.printf(name + ": X: %f/Y: %f/ rotation: %f\n", x, y, rot);
+    public void printloc(String name, double rotation){
+        System.out.printf(name + ": X: %f/Y: %f/ rotation: %f\n", x, y, rotation);
     }
 
 }
