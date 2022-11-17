@@ -3,22 +3,22 @@ import java.lang.Math;
 
 
 public abstract class Car implements Movable{
-    protected int nrDoors; // Number of doors on the car
-    protected double enginePower; // Engine power of the car
-    protected double currentSpeed; // The current speed of the car
-    protected Color color; // Color of the car
-    protected String modelName; // The car model name
-    protected Vec2 location;
-    protected double rotation;
+    private int nrDoors; // Number of doors on the car
+    private double enginePower; // Engine power of the car
+    private double currentSpeed; // The current speed of the car
+    private Color color; // Color of the car
+    private String modelName; // The car model name
+    private Vec2 location;
+    private double rotation;
     
 
-    public Car(int doorNumber, Color col, double engineSTR, String name){
-        nrDoors = doorNumber;
-        color = col;
-        enginePower = engineSTR;
-        modelName = name;
-        location = new Vec2(100, 100);
-        rotation = 0;
+    public Car(int nrDoors, Color color, double enginePower, String modelName){
+        this.nrDoors = nrDoors;
+        this.color = color;
+        this.enginePower = enginePower;
+        this.modelName = modelName;
+        this.location = new Vec2(100, 100);
+        this.rotation = 0;
     }
 
     public void Move(){
@@ -27,29 +27,22 @@ public abstract class Car implements Movable{
 
     public void TurnRight()
     {
-        rotation --;
-        rotation = rotation % 360;
+        rotation = CarMath.betterMod(rotation - 1, 360);
     }
 
     public void TurnLeft()
     {
-        rotation ++;
-        rotation = rotation % 360;
+        rotation = CarMath.betterMod(rotation + 1, 360);
     }
 
     public void printloc()
     {
         location.printloc(modelName, rotation);
     }
-    public double clamp(double _val){
-        double _min = 0;
-        double _max = 1;
 
-        return Math.max(Math.min(_val, _max), _min);
-    }
-
-    public double clamp(double _val, double _min, double _max){
-        return Math.max(Math.min(_val, _max), _min);
+    public double getRotation()
+    {
+        return rotation;
     }
 
     public int getNrDoors(){
@@ -72,32 +65,67 @@ public abstract class Car implements Movable{
     }
 
     public void startEngine(){
-	    currentSpeed = 0.0;
+	    setCurrentSpeed(0.1);
     }
 
     public void stopEngine(){
-	    currentSpeed = 0;
+	    setCurrentSpeed(0);
     }
     
     public double speedFactor(){
         return enginePower * 0.01;
     }
 
+    public void setCurrentSpeed(double speed){
+        currentSpeed = CarMath.clamp(speed, 0, getEnginePower());
+    }
+
     public void incrementSpeed(double amount){
-	    currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+	    setCurrentSpeed(Math.max(Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower),
+                                getCurrentSpeed()));
     }
-
+    
     public void decrementSpeed(double amount){
-        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+        setCurrentSpeed(Math.min(Math.max(getCurrentSpeed() - speedFactor() * amount,0),
+                                getCurrentSpeed()));
     }
 
-
+    // TODO fix this method according to lab pm
     public void gas(double amount){
-        incrementSpeed(clamp(amount));
+        incrementSpeed(CarMath.clamp(amount));
     }
 
-
+    // TODO fix this method according to lab pm
     public void brake(double amount){
-        decrementSpeed(clamp(amount));
+        decrementSpeed(CarMath.clamp(amount));
+    }
+
+    public static class CarMath{ 
+        public static double clamp(double _val, double _min, double _max){
+            return Math.max(Math.min(_val, _max), _min);
+        }
+
+        public static double clamp(double _val){
+            double _min = 0;
+            double _max = 1;
+            return Math.max(Math.min(_val, _max), _min);
+        }
+    
+        public static double betterMod(double val, double mod)//Why can mod do negative numbers???
+        {
+            if (mod < 0)
+            {
+                throw new IllegalArgumentException("You cannot have a negative mod m80", null);
+            }
+    
+            val = val % mod;
+            while (val < 0)
+            {
+                val += mod;
+            }
+    
+            return val;
+        }
+
     }
 }
