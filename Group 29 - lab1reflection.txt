@@ -1,0 +1,20 @@
+﻿Laboration 1
+Group 29
+Oskar, Ludwig and Marco  
+Reflection 
+1. Explain how you chose the inheritance hierarchy in Task 1 ( Open-Closed Principle).
+The inheritance hierarchy In the Laboration 1 assignment we were given the task of creating the base of a car program that will be used in another assignment. This means that we need to make it as extendible and modular as possible so that we can easily implement new features as easily as possible. 
+
+
+In the original file there were two classes, Volvo 240 and Saab95. Both classes had implemented many of their own methods that had the same functionality. In order to remove excess code, we created an abstract class called: "Car" which both now inherit from. The class Car would work as an abstraction of both Volvo240 and Saab95. With the abstract class of a car we could implement all the basic features/behaviors of a car inside the class Car. With this abstraction of a car we could lower the code redundancy, meaning if we were to change the implementation we would only have to change code in the class Car. From there we also moved to set the variables to private while giving them public “getter” methods. This would allow us to keep the Car class from being modified from any inheriting classes while allowing it to be properly extended by said classes in accordance with the open/closed principle. We also set some of the methods to private. Namely the one that sets the speed of the car(setCurrentSpeed) as well as incrementSpeed and decrementSpeed as they should not be available to call directly, but only after going through the proper calculations within gas and brake as they directly would modify the car in unwanted ways.
+
+
+ 
+2. Explain how you implemented each of the sanity checks in Task 4
+We implemented several sanity checks: 
+* stopEngineTest() creates a new Volvo, then since that constructor should set the current speed to 0, we do an assertEquals check to see if getCurrentSpeed for that volvo returns 0.
+* compareCars() creates a new Volvo, then also creates an alias for it. It then uses assertEquals to check if they are both the same object.
+* canCarTurn() creates a new Volvo, then calls TurnLeft() to see if it would change rotation. We then check if the rotation value is not equal to the default position, which was 0, by checking for it it was not equal to it in an assertTrue test.
+* counterCarTurn() creates a new car, then turns it to the left once, then to the right to see if it would turn equally much in both directions and then return to the default value, which was checked through assertTrue.
+* startEngineTest() creates a new car, starts the engine, then calls gas(0.5) and finally turns the engine off. This should set the speed to 0 which is checked through assertEquals.
+* carBrake() creates a new car, then starts the engine, then calls gas(0.5) and brake(0.5), which should leave speed below 1, which is checked with AssertTrue
