@@ -76,16 +76,16 @@ public abstract class Car implements Movable{
         return enginePower * 0.01;
     }
 
-    public void setCurrentSpeed(double speed){
+    private void setCurrentSpeed(double speed){
         currentSpeed = CarMath.clamp(speed, 0, getEnginePower());
     }
 
-    public void incrementSpeed(double amount){
+    private void incrementSpeed(double amount){
 	    setCurrentSpeed(Math.max(Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower),
                                 getCurrentSpeed()));
     }
     
-    public void decrementSpeed(double amount){
+    private void decrementSpeed(double amount){
         setCurrentSpeed(Math.min(Math.max(getCurrentSpeed() - speedFactor() * amount,0),
                                 getCurrentSpeed()));
     }
@@ -93,11 +93,13 @@ public abstract class Car implements Movable{
     // TODO fix this method according to lab pm
     public void gas(double amount){
         incrementSpeed(CarMath.clamp(amount));
+        System.out.println(getCurrentSpeed());
     }
 
     // TODO fix this method according to lab pm
     public void brake(double amount){
         decrementSpeed(CarMath.clamp(amount));
+        System.out.println(getCurrentSpeed());
     }
 
     public static class CarMath{ 

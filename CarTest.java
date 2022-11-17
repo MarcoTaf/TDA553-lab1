@@ -6,15 +6,16 @@ import static org.junit.Assert.assertTrue;
 public class CarTest{
     public static void main(String[] args) {
        Volvo240 ss1 = new Volvo240();
-       ss1.TurnRight();
-       ss1.TurnLeft();
+       ss1.startEngine();
+       ss1.gas(0.5);
+       ss1.brake(0.5);
     }
 
     @Test
     public void stopEngineTest()
     {
         Volvo240 volvo = new Volvo240();
-        assertTrue(volvo.getCurrentSpeed() == 0);
+        assertEquals(0, volvo.getCurrentSpeed(), 0);
     }
     @Test
     public void compareCars()
@@ -40,25 +41,23 @@ public class CarTest{
     testVolvo240.startEngine();
     testVolvo240.gas(0.5);
     testVolvo240.stopEngine();
-    assertTrue(testVolvo240.getCurrentSpeed() == 0);
+    assertEquals(0, testVolvo240.getCurrentSpeed(), 0);
     }
 
     @Test
     public void canTheCarTurn() {
     Saab95 testSaab95 = new Saab95();
-    testSaab95.startEngine();
-    testSaab95.gas(0.5);
     testSaab95.TurnLeft();
     assertTrue(testSaab95.getRotation() != 0.0);
     }
 
     @Test
-    public void carBreak() {
+    public void carBrake() {
     Volvo240 Volvo240 = new Volvo240();
     Volvo240.startEngine();
     Volvo240.gas(0.5);
     Volvo240.brake(0.5);
-    assertEquals(0, Volvo240.getCurrentSpeed(), 0);
+    assertTrue(Math.floor(Volvo240.getCurrentSpeed()) < 1);
     }
   
 

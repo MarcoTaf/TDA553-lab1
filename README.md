@@ -1,5 +1,3 @@
-# TDA553-lab1
-Group 29 members:
-Oskar Meyer,
-Marco Tafani,
+Marco Tafani
+Oskar Meyer
 Ludwig Alexandersson
