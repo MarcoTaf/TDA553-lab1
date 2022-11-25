@@ -25,13 +25,13 @@ public class Scania extends Truck implements Flatbed {
     }
 
     public void isLowered() {
-        if (this.angle != 0) {
+        if (this.angle == 0) {
             this.raised = false;
         }
     }
 
     public void isRaised() {
-        if (this.angle == 0) {
+        if (this.angle != 0) {
             this.raised = true;
         }
     }
