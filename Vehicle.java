@@ -2,23 +2,23 @@ import java.awt.*;
 import java.lang.Math;
 
 
-public abstract class Car implements Movable{
-    private int nrDoors; // Number of doors on the car
-    private double enginePower; // Engine power of the car
-    private double currentSpeed; // The current speed of the car
-    private Color color; // Color of the car
-    private String modelName; // The car model name
+public abstract class Vehicle implements Movable{
+    private double enginePower; // Engine power of the Vehicle
+    private double currentSpeed; // The current speed of the Vehicle
+    private Color color; // Color of the Vehicle
+    private String modelName; // The Vehicle model name
     private Vec2 location;
     private double rotation;
-    
+    private Boolean engineOn;
 
-    public Car(int nrDoors, Color color, double enginePower, String modelName){
-        this.nrDoors = nrDoors;
+    public Vehicle(Color color, double enginePower, String modelName){
         this.color = color;
         this.enginePower = enginePower;
+        this.engineOn = false;
         this.modelName = modelName;
         this.location = new Vec2(100, 100);
         this.rotation = 0;
+        
     }
 
     public void Move(){
@@ -27,12 +27,12 @@ public abstract class Car implements Movable{
 
     public void TurnRight()
     {
-        rotation = CarMath.betterMod(rotation - 1, 360);
+        rotation = VehicleMath.betterMod(rotation - 1, 360);
     }
 
     public void TurnLeft()
     {
-        rotation = CarMath.betterMod(rotation + 1, 360);
+        rotation = VehicleMath.betterMod(rotation + 1, 360);
     }
 
     public void printloc()
@@ -45,9 +45,6 @@ public abstract class Car implements Movable{
         return rotation;
     }
 
-    public int getNrDoors(){
-        return nrDoors;
-    }
     public double getEnginePower(){
         return enginePower;
     }
@@ -66,10 +63,12 @@ public abstract class Car implements Movable{
 
     public void startEngine(){
 	    setCurrentSpeed(0.1);
+        this.engineOn = true;
     }
 
     public void stopEngine(){
 	    setCurrentSpeed(0);
+        this.engineOn = false;
     }
     
     public double speedFactor(){
@@ -77,7 +76,7 @@ public abstract class Car implements Movable{
     }
 
     private void setCurrentSpeed(double speed){
-        currentSpeed = CarMath.clamp(speed, 0, getEnginePower());
+        currentSpeed = VehicleMath.clamp(speed, 0, getEnginePower());
     }
 
     private void incrementSpeed(double amount){
@@ -92,17 +91,19 @@ public abstract class Car implements Movable{
 
     // TODO fix this method according to lab pm
     public void gas(double amount){
-        incrementSpeed(CarMath.clamp(amount));
+        if (this.engineOn == true) {
+        incrementSpeed(VehicleMath.clamp(amount));
         System.out.println(getCurrentSpeed());
+    }
     }
 
     // TODO fix this method according to lab pm
     public void brake(double amount){
-        decrementSpeed(CarMath.clamp(amount));
+        decrementSpeed(VehicleMath.clamp(amount));
         System.out.println(getCurrentSpeed());
     }
 
-    public static class CarMath{ 
+    public static class VehicleMath{ 
         public static double clamp(double _val, double _min, double _max){
             return Math.max(Math.min(_val, _max), _min);
         }
